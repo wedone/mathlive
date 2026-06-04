@@ -6371,7 +6371,7 @@ convertMathJsonToLatex(["Add", 1, 2]);
 ### validateLatex()
 
 ```ts
-function validateLatex(s): LatexSyntaxError[]
+function validateLatex(s, options?): LatexSyntaxError[]
 ```
 
 Check if a string of LaTeX is valid and return an array of syntax errors.
@@ -6379,6 +6379,10 @@ Check if a string of LaTeX is valid and return an array of syntax errors.
 ##### s
 
 `string`
+
+##### options?
+
+`Pick`\<[`LayoutOptions`](#layoutoptions), `"macros"`\>
 
 </MemberCard>
 
