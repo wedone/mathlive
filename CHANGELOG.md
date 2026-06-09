@@ -15,6 +15,18 @@
   instead of a bare `H`), matching what is displayed in the mathfield.
   (contributed by @psiservices-uwidmark)
 
+- **#2964** Fixed duplicate atoms accumulating when `setValue()` is called
+  repeatedly with incomplete LaTeX (such as `\sum_{`). Partially-formed atoms
+  that contain no content are now included when collecting atoms in a range, so
+  they are cleared on each sync instead of accumulating across update cycles.
+  (contributed by @Meinzzzz)
+
+- **#3030** Fixed TypeScript 6 compilation errors (TS2882) in the published
+  type declarations. The generated `.d.ts` files no longer contain bare
+  side-effect imports (such as `import '../core/modes'`) that referenced
+  modules not included in the package, which TypeScript 6 flags by default via
+  `noUncheckedSideEffectImports`.
+
 ### Improvements
 
 - **#3032** `validateLatex()` now accepts an optional `options` argument with a
