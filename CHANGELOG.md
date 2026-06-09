@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+### Security Advisories
+
+- **#3028** Fixed a cross-site scripting (XSS) vulnerability in the rendering of
+  text-mode content. The body of `\text{}`, `\mbox{}` and similar commands
+  accepts arbitrary characters, which were reflected **unescaped** into both the
+  HTML markup (`convertLatexToMarkup()`, the editor, and the `<math-span>` /
+  `<math-div>` static elements) and the MathML output
+  (`convertLatexToMathMl()`). Input such as
+  `\text{<img src=x onerror=alert(1)>}` could therefore execute arbitrary
+  JavaScript when the output was inserted into the DOM. Text content and
+  delimiters are now HTML-escaped in both output paths. Applications that render
+  untrusted LaTeX should upgrade.
+
 ### Resolved Issues
 
 - **#2949** Fixed the layout of fill-in-the-blank prompts that contain content.
@@ -7,7 +20,8 @@
   including tall content such as fractions, with improved vertical alignment.
   This regression was introduced by the fix for **#2515**; note that **#2515**
   (placeholders inside accent commands such as `\vec{}` cannot be filled)
-  remains unresolved and is tracked separately. (contributed by @Scienthousiaste)
+  remains unresolved and is tracked separately. (contributed by
+  @Scienthousiaste)
 
 - **#2963** Fixed font style (variant) changes being ignored for the first
   character of an expression (or block). Applying a font style such as Roman
@@ -21,21 +35,21 @@
   they are cleared on each sync instead of accumulating across update cycles.
   (contributed by @Meinzzzz)
 
-- **#3030** Fixed TypeScript 6 compilation errors (TS2882) in the published
-  type declarations. The generated `.d.ts` files no longer contain bare
-  side-effect imports (such as `import '../core/modes'`) that referenced
-  modules not included in the package, which TypeScript 6 flags by default via
+- **#3030** Fixed TypeScript 6 compilation errors (TS2882) in the published type
+  declarations. The generated `.d.ts` files no longer contain bare side-effect
+  imports (such as `import '../core/modes'`) that referenced modules not
+  included in the package, which TypeScript 6 flags by default via
   `noUncheckedSideEffectImports`.
 
 ### Improvements
 
 - **#3032** `validateLatex()` now accepts an optional `options` argument with a
-  `macros` dictionary, so custom macros are recognized during validation
-  instead of being reported as unknown commands. (contributed by @Wigny)
+  `macros` dictionary, so custom macros are recognized during validation instead
+  of being reported as unknown commands. (contributed by @Wigny)
 
-- **#3009** The types for static math elements are now exported from the
-  package entry point (`math-static-elements`), making them available to
-  TypeScript consumers. (contributed by @tsuji-riya)
+- **#3009** The types for static math elements are now exported from the package
+  entry point (`math-static-elements`), making them available to TypeScript
+  consumers. (contributed by @tsuji-riya)
 
 ## 0.109.2 _2026-04-28_
 
