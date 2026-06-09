@@ -9,6 +9,22 @@
   (placeholders inside accent commands such as `\vec{}` cannot be filled)
   remains unresolved and is tracked separately. (contributed by @Scienthousiaste)
 
+- **#2963** Fixed font style (variant) changes being ignored for the first
+  character of an expression (or block). Applying a font style such as Roman
+  Upright to the first character now serializes correctly (e.g. `\mathrm{H}`
+  instead of a bare `H`), matching what is displayed in the mathfield.
+  (contributed by @psiservices-uwidmark)
+
+### Improvements
+
+- **#3032** `validateLatex()` now accepts an optional `options` argument with a
+  `macros` dictionary, so custom macros are recognized during validation
+  instead of being reported as unknown commands. (contributed by @Wigny)
+
+- **#3009** The types for static math elements are now exported from the
+  package entry point (`math-static-elements`), making them available to
+  TypeScript consumers. (contributed by @tsuji-riya)
+
 ## 0.109.2 _2026-04-28_
 
 ### Resolved Issues
