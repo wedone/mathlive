@@ -151,10 +151,19 @@ export function convertLatexToMarkup(
 /**
  * Check if a string of LaTeX is valid and return an array of syntax errors.
  *
+ * @param options.macros Custom macro definitions to recognize during validation.
  * @category Conversion
  */
-export function validateLatex(s: string): LatexSyntaxError[] {
-  return validateLatexInternal(s, { context: getDefaultContext() });
+export function validateLatex(
+  s: string,
+  options?: Pick<LayoutOptions, 'macros'>
+): LatexSyntaxError[] {
+  const context = { ...getDefaultContext() };
+  if (options?.macros) {
+    const macros = normalizeMacroDictionary(options.macros);
+    context.getMacro = (token) => getMacroDefinition(token, macros);
+  }
+  return validateLatexInternal(s, { context });
 }
 
 /**
