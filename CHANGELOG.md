@@ -1,3 +1,14 @@
+## [Unreleased]
+
+### Resolved Issues
+
+- **#2949** Fixed the layout of fill-in-the-blank prompts that contain content.
+  The prompt's outline box now correctly encloses and aligns with its content,
+  including tall content such as fractions, with improved vertical alignment.
+  This regression was introduced by the fix for **#2515**; note that **#2515**
+  (placeholders inside accent commands such as `\vec{}` cannot be filled)
+  remains unresolved and is tracked separately. (contributed by @Scienthousiaste)
+
 ## 0.109.2 _2026-04-28_
 
 ### Resolved Issues
@@ -14,10 +25,10 @@
   doubled empty space that appeared below the keyboard on devices with bottom
   safe areas. (contributed by @Blibbo)
 
-- Fixed a stacking issue in the color picker where the background of
-  neighboring color swatches could paint over the border of the active swatch.
-  The focused color now has an explicit `z-index` to keep it above its
-  neighbors. (contributed by @Blibbo)
+- Fixed a stacking issue in the color picker where the background of neighboring
+  color swatches could paint over the border of the active swatch. The focused
+  color now has an explicit `z-index` to keep it above its neighbors.
+  (contributed by @Blibbo)
 
 ### Improvements
 

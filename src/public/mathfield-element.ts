@@ -1088,19 +1088,29 @@ export class MathfieldElement extends HTMLElement implements Mathfield {
    */
   static get computeEngine(): ComputeEngine | null {
     if (this._computeEngine === undefined) {
-      const ComputeEngineCtor =
-        window[Symbol.for('io.cortexjs.compute-engine')]?.ComputeEngine;
+      const globalComputeEngine =
+        window[Symbol.for('io.cortexjs.compute-engine')];
+      const ComputeEngineCtor = globalComputeEngine?.ComputeEngine;
 
       if (!ComputeEngineCtor) return null;
 
       this._computeEngine = new ComputeEngineCtor();
 
       if (this._computeEngine && this.decimalSeparator === ',') {
-        // Compute Engine 0.55 removed the public decimalSeparator setter; the
-        // value now lives on the engine's LatexSyntax instance and is only
-        // reachable via its (private) _options field.
-        const opts = (this._computeEngine.latexSyntax as any)?._options;
-        if (opts) opts.decimalSeparator = '{,}';
+        // Setting the decimal separator uses the public `latexOptions` API,
+        // introduced in Compute Engine 0.58. Older engines (which may be
+        // loaded from a CDN) have no public way to set it, so if the loaded
+        // engine is older than expected we leave the separator at its default
+        // rather than reach into private internals.
+        const [major, minor] = String(globalComputeEngine?.version ?? '')
+          .split('.')
+          .map((x) => parseInt(x, 10));
+        if (major > 0 || (major === 0 && minor >= 58)) {
+          this._computeEngine.latexOptions = {
+            ...this._computeEngine.latexOptions,
+            decimalSeparator: '{,}',
+          };
+        }
       }
     }
     return this._computeEngine ?? null;

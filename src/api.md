@@ -6856,6 +6856,18 @@ LaTeX global registers override.
 
 <MemberCard>
 
+### StaticElementFormat
+
+```ts
+type StaticElementFormat = "latex" | "ascii-math" | "math-json";
+```
+
+Format types supported by static elements
+
+</MemberCard>
+
+<MemberCard>
+
 ### version
 
 ```ts
