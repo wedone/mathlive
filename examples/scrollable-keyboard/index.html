@@ -10,63 +10,89 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
-      font-family: system-ui, sans-serif;
+      height: 100%;
       margin: 0;
-      padding: 16px;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: system-ui, sans-serif;
       background: #f5f5f5;
     }
 
-    h1 {
-      font-size: 18px;
-      margin: 0 0 12px 0;
-      color: #333;
+    /* 编辑器区域撑满剩余空间，math-field 靠下对齐 */
+    .editor-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      /* padding: 0 16px; */
     }
 
     math-field {
       font-size: 28px;
       width: 100%;
-      max-width: 600px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 4px 8px;
-      background: #fff;
-      margin-bottom: 16px;
+      /* max-width: 600px; */
+      border: none;
+      /* 去掉组件默认边框 */
+      outline: none;
+      /* 去掉浏览器默认聚焦轮廓 */
+      /* border: 1px solid #ccc; */
+      border-bottom: none;
+      /* border-radius: 8px 8px 0 0; */
+      padding: 8px 12px;
+      /* 内边距，顺序： 上下、左右 */
+      /* background: #fff; */
     }
 
-    .info {
-      font-size: 14px;
-      color: #666;
-      max-width: 600px;
-      line-height: 1.5;
+    math-field:focus-within {
+      border-color: #0d80f2;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(13, 128, 242, 0.2);
+    }
+
+    /* 隐藏 math-field 菜单切换按钮 */
+    math-field::part(menu-toggle) {
+      display: none;
+    }
+
+    math-field::part(virtual-keyboard-toggle) {
+      display: none;
+    }
+
+    /* 虚拟键盘顶部与 math-field 底部无缝连接 */
+    body>.ML__keyboard.is-visible>.MLK__backdrop {
+      box-shadow: none;
+      border-top: none;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>可滚动虚拟键盘（fixedRows 底层 API）</h1>
-
-  <math-field id="mf" math-virtual-keyboard-policy="manual">x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</math-field>
-
-  <p class="info">
-    使用 MathLive 虚拟键盘底层的 <code>fixedRows</code> 属性，功能键固定在底部不参与滚动，其他行超出可视区域时可滚动。
-    可通过 CSS 变量 <code>--keyboard-scrollable-max-height</code> 控制滚动区域最大高度。
-  </p>
+  <div class="editor-area">
+    <math-field id="mf">x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</math-field>
+  </div>
 
   <script type="module">
     import '/dist/mathlive.mjs';
 
     const mf = document.getElementById('mf');
 
-    mf.addEventListener('focusin', () => mathVirtualKeyboard.show());
+    // 永远显示虚拟键盘
+    mf.mathVirtualKeyboardPolicy = 'manual';
+    mathVirtualKeyboard.show();
 
     mathVirtualKeyboard.layouts = [
       {
         label: '基本',
         layers: [
           {
-            // 可滚动的行
             rows: [
               ['[7]', '[8]', '[9]', '[+]', { class: 'separator', width: 0.5 },
                 { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
@@ -81,7 +107,6 @@
               ['\\sin', '\\cos', '\\tan', '\\log', { class: 'separator', width: 0.5 },
                 '\\lim', '\\infty', '\\partial', '\\nabla'],
             ],
-            // 固定在底部不滚动的功能键行
             fixedRows: [
               ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
                 '[-]', '[+]', '[=]', '[.]',
