@@ -144,6 +144,8 @@ export type NormalizedVirtualKeyboardLayout = VirtualKeyboardLayoutCore & {
 export interface VirtualKeyboardLayer {
   /** The rows of keycaps in this layer */
   rows?: (Partial<VirtualKeyboardKeycap> | string)[][];
+  /** Rows that stay fixed at the bottom of the virtual keyboard and do not scroll */
+  fixedRows?: (Partial<VirtualKeyboardKeycap> | string)[][];
   markup?: string;
   /** The CSS stylesheet associated with this layer */
   style?: string;
@@ -160,6 +162,7 @@ export interface VirtualKeyboardLayer {
  */
 export interface NormalizedVirtualKeyboardLayer {
   rows?: Partial<VirtualKeyboardKeycap>[][];
+  fixedRows?: Partial<VirtualKeyboardKeycap>[][];
   markup?: string;
 
   style?: string;

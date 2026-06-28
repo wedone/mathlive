@@ -118,6 +118,11 @@ function normalizeLayer(
   if ('rows' in result && Array.isArray(result.rows))
     result.rows = result.rows.map((row) => row.map((x) => normalizeKeycap(x)));
 
+  if ('fixedRows' in result && Array.isArray(result.fixedRows))
+    result.fixedRows = result.fixedRows.map((row) =>
+      row.map((x) => normalizeKeycap(x))
+    );
+
   result.id ??=
     'ML__layer_' +
     Date.now().toString(36).slice(-2) +
@@ -620,7 +625,7 @@ function makeLayout(
   const markup: string[] = [];
   if (!('layers' in layout)) return '';
   for (const layer of layout.layers) {
-    markup.push(`<div tabindex="-1" class="MLK__layer" id="${layer.id}">`);
+    markup.push(`<div tabindex="-1" class="MLK__layer${layer.fixedRows ? ' has-fixed-rows' : ''}" id="${layer.id}">`);
 
     if (keyboard.normalizedLayouts.length > 1 || layout.displayEditToolbar) {
       markup.push(`<div class='MLK__toolbar' role='toolbar'>`);
@@ -658,49 +663,63 @@ function makeLayer(
 
   if (layer.container) layerMarkup += `<div class='${layer.container}'>`;
 
-  if (layer.rows) {
-    layerMarkup += `<div class=MLK__rows>`;
-    for (const row of layer.rows) {
-      layerMarkup += `<div dir="ltr" class=MLK__row>`;
+  const renderRows = (
+    rows: Partial<VirtualKeyboardKeycap>[][],
+    className: string
+  ): string => {
+    let rowsMarkup = `<div class="${className}">`;
+    for (const row of rows) {
+      rowsMarkup += `<div dir="ltr" class=MLK__row>`;
       for (const keycap of row) {
         if (keycap) {
           const keycapId = keyboard.registerKeycap(keycap);
           const [markup, cls] = renderKeycap(keycap);
 
-          if (/(^|\s)separator/.test(cls)) layerMarkup += `<div class="${cls}"`;
+          if (/(^|\s)separator/.test(cls)) rowsMarkup += `<div class="${cls}"`;
           else
-            layerMarkup += `<div tabindex="-1" id="${keycapId}" class="${cls}"`;
+            rowsMarkup += `<div tabindex="-1" id="${keycapId}" class="${cls}"`;
 
           if (keycap.tooltip)
-            layerMarkup += ` data-tooltip="${escapeAttribute(keycap.tooltip)}"`;
+            rowsMarkup += ` data-tooltip="${escapeAttribute(keycap.tooltip)}"`;
 
           const ariaLabel = getKeycapAriaLabel(keycap);
           if (ariaLabel)
-            layerMarkup += ` aria-label="${escapeAttribute(ariaLabel)}"`;
+            rowsMarkup += ` aria-label="${escapeAttribute(ariaLabel)}"`;
 
           const serializedCommand = serializeKeycapCommand(keycap.command);
           if (serializedCommand) {
-            layerMarkup += ` data-command="${escapeAttribute(
+            rowsMarkup += ` data-command="${escapeAttribute(
               serializedCommand
             )}"`;
           }
 
           const keycapValue = getKeycapValue(keycap);
           if (keycapValue) {
-            layerMarkup += ` data-keycap-value="${escapeAttribute(
+            rowsMarkup += ` data-keycap-value="${escapeAttribute(
               keycapValue
             )}"`;
           }
 
-          layerMarkup += `>${markup}</div>`;
+          rowsMarkup += `>${markup}</div>`;
         }
       }
 
-      layerMarkup += `</div>`;
+      rowsMarkup += `</div>`;
     }
 
-    layerMarkup += `</div>`;
-  } else if (layer.markup) layerMarkup += layer.markup;
+    rowsMarkup += `</div>`;
+    return rowsMarkup;
+  };
+
+  if (layer.rows) {
+    const scrollableClass = layer.fixedRows ? 'MLK__scrollable-rows' : '';
+    layerMarkup += renderRows(layer.rows, `MLK__rows ${scrollableClass}`.trim());
+  }
+
+  if (layer.fixedRows)
+    layerMarkup += renderRows(layer.fixedRows, 'MLK__rows MLK__fixed-rows');
+
+  if (!layer.rows && !layer.fixedRows && layer.markup) layerMarkup += layer.markup;
 
   if (layer.container) layerMarkup += '</div>';
 

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>可滚动虚拟键盘 - fixedRows 底层 API</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0 0 12px 0;
+      color: #333;
+    }
+
+    math-field {
+      font-size: 28px;
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 4px 8px;
+      background: #fff;
+      margin-bottom: 16px;
+    }
+
+    .info {
+      font-size: 14px;
+      color: #666;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>可滚动虚拟键盘（fixedRows 底层 API）</h1>
+
+  <math-field id="mf" math-virtual-keyboard-policy="manual">x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</math-field>
+
+  <p class="info">
+    使用 MathLive 虚拟键盘底层的 <code>fixedRows</code> 属性，功能键固定在底部不参与滚动，其他行超出可视区域时可滚动。
+    可通过 CSS 变量 <code>--keyboard-scrollable-max-height</code> 控制滚动区域最大高度。
+  </p>
+
+  <script type="module">
+    import '/dist/mathlive.mjs';
+
+    const mf = document.getElementById('mf');
+
+    mf.addEventListener('focusin', () => mathVirtualKeyboard.show());
+
+    mathVirtualKeyboard.layouts = [
+      {
+        label: '基本',
+        layers: [
+          {
+            // 可滚动的行
+            rows: [
+              ['[7]', '[8]', '[9]', '[+]', { class: 'separator', width: 0.5 },
+                { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
+              ['[4]', '[5]', '[6]', '[-]', { class: 'separator', width: 0.5 },
+                '[(]', '[)]', '\\lt', '\\le', '\\hat{=}'],
+              ['[1]', '[2]', '[3]', '\\cdot', { class: 'separator', width: 0.5 },
+                '[', ']', '\\gt', '\\ne', '\\ge'],
+              [{ label: '[0]', width: 2 }, '[.]', '\\colon', { class: 'separator', width: 0.5 },
+                '\\lbrace', '\\rbrace', '=', '\\ne'],
+              ['\\alpha', '\\beta', '\\gamma', '\\delta', { class: 'separator', width: 0.5 },
+                '\\sum', '\\prod', '\\int', '\\oint'],
+              ['\\sin', '\\cos', '\\tan', '\\log', { class: 'separator', width: 0.5 },
+                '\\lim', '\\infty', '\\partial', '\\nabla'],
+            ],
+            // 固定在底部不滚动的功能键行
+            fixedRows: [
+              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
+                '[-]', '[+]', '[=]', '[.]',
+                { label: '[action]', width: 1.5 }],
+            ],
+          },
+        ],
+      },
+      {
+        label: '符号',
+        layers: [
+          {
+            rows: [
+              ['\\pm', '\\mp', '\\times', '\\div', '\\cdot', '\\ast', '\\star', '\\circ'],
+              ['\\cap', '\\cup', '\\wedge', '\\vee', '\\oplus', '\\otimes', '\\ominus', '\\oslash'],
+              ['\\subseteq', '\\supseteq', '\\subset', '\\supset', '\\in', '\\notin', '\\ni', '\\emptyset'],
+              ['\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow', '\\mapsto', '\\longmapsto', '\\implies', '\\iff'],
+              ['\\approx', '\\simeq', '\\cong', '\\equiv', '\\propto', '\\sim', '\\models', '\\dashv'],
+              ['\\forall', '\\exists', '\\nexists', '\\neg', '\\top', '\\bot', '\\vdash', '\\vDash'],
+            ],
+            fixedRows: [
+              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
+                '[-]', '[+]', '[=]', '[.]',
+                { label: '[action]', width: 1.5 }],
+            ],
+          },
+        ],
+      },
+      {
+        label: '希腊',
+        layers: [
+          {
+            rows: [
+              ['\\alpha', '\\beta', '\\gamma', '\\delta', '\\epsilon', '\\zeta', '\\eta', '\\theta'],
+              ['\\iota', '\\kappa', '\\lambda', '\\mu', '\\nu', '\\xi', '\\omicron', '\\pi'],
+              ['\\rho', '\\sigma', '\\tau', '\\upsilon', '\\phi', '\\chi', '\\psi', '\\omega'],
+              ['\\Gamma', '\\Delta', '\\Theta', '\\Lambda', '\\Xi', '\\Pi', '\\Sigma', '\\Phi'],
+              ['\\Psi', '\\Omega', '\\varpi', '\\varrho', '\\varsigma', '\\varphi', '\\aleph', '\\hbar'],
+            ],
+            fixedRows: [
+              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
+                '[-]', '[+]', '[=]', '[.]',
+                { label: '[action]', width: 1.5 }],
+            ],
+          },
+        ],
+      },
+    ];
+  </script>
+
+</body>
+
+</html>

@@ -405,6 +405,32 @@ body > .ML__keyboard.is-visible.animate > .MLK__backdrop {
   overflow: visible;
 
   touch-action: none;
+
+  /* 当存在 fixedRows 时，滚动行区域限制最大高度并允许滚动 */
+  &.MLK__scrollable-rows {
+    --_scrollable-max-height: var(--keyboard-scrollable-max-height, ~'calc(5 * var(--_keycap-height) + 4 * var(--_keycap-gap))');
+    max-height: var(--_scrollable-max-height);
+    overflow-y: auto;
+    overflow-x: visible;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-y;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > .MLK__row {
+      flex-shrink: 0;
+    }
+  }
+}
+
+/* 固定行：不参与滚动，始终显示在键盘底部 */
+.MLK__fixed-rows {
+  flex-shrink: 0;
+  overflow: visible;
+  border-top: 1px solid var(--_border);
 }
 
 .MLK__rows > .MLK__row {
