@@ -94,23 +94,55 @@
         layers: [
           {
             rows: [
-              ['[7]', '[8]', '[9]', '[+]', { class: 'separator', width: 0.5 },
-                { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
-              ['[4]', '[5]', '[6]', '[-]', { class: 'separator', width: 0.5 },
-                '[(]', '[)]', '\\lt', '\\le', '\\hat{=}'],
-              ['[1]', '[2]', '[3]', '\\cdot', { class: 'separator', width: 0.5 },
-                '[', ']', '\\gt', '\\ne', '\\ge'],
-              [{ label: '[0]', width: 2 }, '[.]', '\\colon', { class: 'separator', width: 0.5 },
-                '\\lbrace', '\\rbrace', '=', '\\ne'],
+              ['[0]', '[1]', '[2]', '[3]', '[4]', { class: 'separator', width: 0.5 },
+                { latex: "A", variants: ["a", "\\alpha"] },
+                { latex: "B", variants: ["b", "\\beta"] },
+                { latex: "C", variants: ["c", "\\gamma"] },
+                { latex: "D", variants: ["d", "\\delta"] },
+                { latex: "E", variants: ["e", "\\epsilon"] }
+              ],
+              // { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
+              ['[5]', '[6]', '[7]', '[8]', '[9]', { class: 'separator', width: 0.5 },
+                { latex: "F", variants: ["f", "\\phi"] },
+                { latex: "G", variants: ["g", "\\gamma"] },
+                { latex: "H", variants: ["h", "\\delta"] },
+                { latex: "I", variants: ["i", "\\epsilon"] },
+                { latex: "J", variants: ["j", "\\phi"] }
+                // '(#@)', '[)]', '\\lt', '\\le', '\\hat{=}'
+              ],
+              ['[.]', '[.]', { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
+                { class: 'small', latex: '\\frac{#@}{#?}' },
+                { latex: '\\overrightarrow{#0}', variants: ['\\vec{#0}'] },
+
+                { class: 'separator', width: 0.5 },
+                { latex: "K", variants: ["k", "\\phi"] },
+                { latex: "L", variants: ["l", "\\gamma"] },
+                { latex: "M", variants: ["m", "\\delta"] },
+                { latex: "N", variants: ["n", "\\epsilon"] },
+                { latex: "O", variants: ["o", "\\phi"] }
+                // '[', ']', '\\gt', '\\ne', '\\ge'
+              ],
+              [
+                { label: '[0]', width: 2 }, '[.]', '\\colon', { class: 'separator', width: 0.5 },
+                '\\lbrace', '\\rbrace', '=', '\\ne'
+              ],
+
               ['\\alpha', '\\beta', '\\gamma', '\\delta', { class: 'separator', width: 0.5 },
-                '\\sum', '\\prod', '\\int', '\\oint'],
+                '\\sum', '\\prod', '\\int', '\\oint'
+              ],
+
               ['\\sin', '\\cos', '\\tan', '\\log', { class: 'separator', width: 0.5 },
-                '\\lim', '\\infty', '\\partial', '\\nabla'],
+                '\\lim', '\\infty', '\\partial', '\\nabla'
+              ],
             ],
             fixedRows: [
-              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
-                '[-]', '[+]', '[=]', '[.]',
-                { label: '[action]', width: 1.5 }],
+              ['[+]', '[-]', '[*]', '[/]', '[=]',
+                { class: 'separator', width: 0.5 },
+                { label: '[shift]', width: 1 },
+                { label: '[backspace]', width: 1 },
+                // { class: 'action', label: '[backspace]', "command": 'backspace', variants: '[deleteAll]', width: 1 },
+                '[left]', '[right]',
+                { label: '[action]', width: 1 }],
             ],
           },
         ],
