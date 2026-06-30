@@ -338,8 +338,7 @@ export class _Mathfield implements Mathfield, KeyboardDelegateInterface {
     // 2.1.1/ The virtual keyboard toggle
     if (window.mathVirtualKeyboard) {
       markup.push(
-        `<div part=virtual-keyboard-toggle class=ML__virtual-keyboard-toggle role=button ${
-          this.hasEditableContent ? '' : 'style="display:none;"'
+        `<div part=virtual-keyboard-toggle class=ML__virtual-keyboard-toggle role=button ${this.hasEditableContent ? '' : 'style="display:none;"'
         } data-l10n-tooltip="tooltip.toggle virtual keyboard">`
       );
       markup.push(DEFAULT_KEYBOARD_TOGGLE_GLYPH);
@@ -1299,8 +1298,8 @@ If you are using Vue, this may be because you are using the runtime-only build o
           const atoms =
             model.mode === 'math'
               ? parseLatex(parseMathString(s, { format: 'ascii-math' })[1], {
-                  context: this.context,
-                })
+                context: this.context,
+              })
               : [...s].map((c) => new TextAtom(c, c, {}));
 
           if (options.select) {
@@ -1401,6 +1400,15 @@ If you are using Vue, this may be because you are using the runtime-only build o
   focus(options?: FocusOptions): void {
     if (this.disabled || this.focusBlurInProgress) return;
     if (!this.hasFocus()) {
+      if (
+        this.blurred &&
+        this.model.selectionIsCollapsed &&
+        this.model.position === 0 &&
+        this.model.lastOffset > 0 &&
+        !this.hasEditablePrompts
+      ) {
+        this.model.position = this.model.lastOffset;
+      }
       this.programmaticFocusInProgress = true;
       this.onFocus();
       this.model.announce('line');

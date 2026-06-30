@@ -53,7 +53,7 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
 
   private keycapRegistry: Record<string, Partial<VirtualKeyboardKeycap>> = {};
 
-  latentLayer: string;
+  latentLayer: string = '';
 
   get currentLayer(): string {
     return this._element?.querySelector('.MLK__layer.is-visible')?.id ?? '';
@@ -190,8 +190,8 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
 
   private _normalizedLayouts:
     | (VirtualKeyboardLayoutCore & {
-        layers: NormalizedVirtualKeyboardLayer[];
-      })[]
+      layers: NormalizedVirtualKeyboardLayer[];
+    })[]
     | undefined;
   get normalizedLayouts(): (VirtualKeyboardLayoutCore & {
     layers: NormalizedVirtualKeyboardLayer[];
@@ -235,7 +235,7 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
     return this._singleton;
   }
 
-  private _style: Style;
+  private _style: Style = {} as Style;
   get style(): Style {
     return this._style;
   }
@@ -494,6 +494,8 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
 
       this.currentLayer = this.latentLayer;
     }
+
+    this.focusMathfieldIfNeeded();
 
     this._visible = true;
 
@@ -826,6 +828,33 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
    */
   public blur(): void {
     this.sendMessage('blur', {});
+  }
+
+  private focusMathfieldIfNeeded(): void {
+    if (this.connectedMathfieldWindow) {
+      this.focus();
+      return;
+    }
+
+    const mf = focusedMathfield() ?? this.findMathfieldToFocus();
+    if (!mf) return;
+
+    mf.focus();
+  }
+
+  private findMathfieldToFocus(): MathfieldElement | null {
+    const candidates = Array.from(
+      document.querySelectorAll('math-field')
+    ) as MathfieldElement[];
+    if (candidates.length === 0) return null;
+    if (candidates.length === 1) return candidates[0];
+
+    const manual = candidates.find(
+      (mf) => mf.mathVirtualKeyboardPolicy === 'manual'
+    );
+    if (manual) return manual;
+
+    return candidates[0];
   }
 
   updateToolbar(mf: MathfieldProxy): void {
