@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8" />
+  <title>MathLive Custom Virtual Keyboard</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .mathfield {
+      font-size: 32px;
+    }
+
+    math-field:not(:defined) {
+      visibility: hidden;
+    }
+
+    /* math-field:focus-within {
+      outline: none;
+      background: red;
+    } */
+
+    code {
+      white-space: pre-wrap;
+    }
+
+    h2 {
+      font-size: 1em;
+      padding: 0;
+      margin: 0;
+      color: #666;
+    }
+
+    #mathfield-container {
+      padding: 8px;
+      min-width: 50px;
+      border: 1px solid #ddd;
+    }
+
+    #ta {
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+
+    #find-input,
+    #replace-input {
+      width: 320px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .math {
+      display: none;
+    }
+
+    #keyboard-container {
+      display: block;
+      position: relative;
+
+      height: 600px;
+      width: 1024px;
+      background: palegreen;
+      overflow: hidden;
+      border: 5px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>MathLive Custom Virtual Keyboard</h1>
+  </header>
+  <main class="centered" tabindex="0">
+    <!-- <div id='keyboard-container'> -->
+    <math-field id="mf" class="mathfield" style="font-size: 32px; max-width: 640px; width: 100%"
+      virtual-keyboard-mode="manual">a+b</math-field>
+
+    <h2>LaTeX</h2>
+    <div class="output" id="latex"></div>
+  </main>
+
+  <script type="module">
+    import '/dist/mathlive.mjs';
+
+    const mf = document.getElementById('mf');
+
+    mathVirtualKeyboard.layouts = {
+      layers: [
+        {
+          rows: [
+            [
+              "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
+              "(", ")", "\\sqrt{#0}", "#@^{#?}"
+            ]
+          ]
+        },
+        {
+          rows: [
+            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+          ]
+        }
+      ]
+    };
+
+    mf?.addEventListener('input', (ev) => updateContent(mf));
+    mf?.addEventListener('math-error', (ev) =>
+      console.log('Error :' + ev.detail.code)
+    );
+
+    if (mf) updateContent(mf);
+
+    function updateContent(mf) {
+      const latex = mf.getValue('latex-expanded');
+      try {
+        document.getElementById('latex').innerHTML = escapeHtml(latex);
+      } catch (e) {
+        console.error(
+          'Error converting %c ' + latex + '%c ' + e.toString(),
+          'color: red;  background: hsla(0, 60%, 90%)',
+          'background: transparent'
+        );
+      }
+    }
+
+    function escapeHtml(string) {
+      return String(string).replace(/[&<>"'`= /\u200b]/g, function (s) {
+        return (
+          {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;',
+            '\u200b': '&amp;#zws;',
+          }[s] || s
+        );
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -96,54 +96,59 @@
             rows: [
               // 第一行
               ['[0]', '[1]', '[2]', '[3]', '[4]', { class: 'separator', width: 0.5 },
-                { latex: "A", variants: ["a", "\\alpha"] },
-                { latex: "B", variants: ["b", "\\beta"] },
-                { latex: "C", variants: ["c", "\\gamma"] },
-                { latex: "D", variants: ["d", "\\delta"] },
-                { latex: "E", variants: ["e", "\\epsilon"] }
+                { label: "A", variants: ["a", "\\alpha"] },
+                { label: "B", variants: ["b", "\\beta"] },
+                { label: "C", variants: ["c", "\\gamma"] },
+                { label: "D", variants: ["d", "\\delta"] },
+                { label: "E", variants: ["e", "\\epsilon"] }
               ],
               // { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
               // 第二行
               ['[5]', '[6]', '[7]', '[8]', '[9]', { class: 'separator', width: 0.5 },
-                { latex: "F", variants: ["f", "\\phi"] },
-                { latex: "G", variants: ["g", "\\gamma"] },
-                { latex: "H", variants: ["h", "\\delta"] },
-                { latex: "I", variants: ["i", "\\epsilon"] },
-                { latex: "J", variants: ["j", "\\phi"] }
+                { label: "F", variants: ["f", "\\phi"] },
+                { label: "G", variants: ["g", "\\gamma"] },
+                { label: "H", variants: ["h", "\\delta"] },
+                { label: "I", variants: ["i", "\\epsilon"] },
+                { label: "J", variants: ["j", "\\phi"] }
                 // '(#@)', '[)]', '\\lt', '\\le', '\\hat{=}'
               ],
               // 第三行
-              ['[.]',
-                { latex: '{#@}^{\\placeholder{@0}}', variants: ['{#@}_{\\placeholder{@0}}'] },
+              [
+                '[.]',
+                { latex: '{#@}^{\\placeholder{@0}}', variants: ['{#@}_{\\placeholder{@0}}', '{#@}_{\\placeholder{@?}}^{\\placeholder{@?}}'] },
                 { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
-                { class: 'small', latex: '\\frac{#@}{#?}' },
+                { class: 'small', latex: '\\frac{#@}{#?}', variants: ["\\frac{#?}{#@}"] },
                 { latex: '\\overrightarrow{#0}', variants: ['\\vec{#0}'] },
                 { class: 'separator', width: 0.5 },
-                { latex: "K", variants: ["k", "\\phi"] },
-                { latex: "L", variants: ["l", "\\gamma"] },
-                { latex: "M", variants: ["m", "\\delta"] },
-                { latex: "N", variants: ["n", "\\epsilon"] },
-                { latex: "O", variants: ["o", "\\phi"] }
+                { label: "K", variants: ["k", "\\phi"] },
+                { label: "L", variants: ["l", "\\gamma"] },
+                { label: "M", variants: ["m", "\\delta"] },
+                { label: "N", variants: ["n", "\\epsilon"] },
+                { label: "O", variants: ["o", "\\phi"] }
                 // '[', ']', '\\gt', '\\ne', '\\ge'
               ],
               // 第四行
               [
-                { latex: '|{#0}|', variants: ['||{#0}||', '{#@}°'] },
+                { latex: '|{#0}|', variants: ['||{#0}||'] },
                 { latex: '{#@}^{\\prime}', variants: ['{#@}^{\\doubleprime}', '{#@}°'] },
-                '[.]', '[.]', '\\colon', { class: 'separator', width: 0.5 },
-                { latex: "P", variants: ["p", "\\gamma"] },
-                { latex: "Q", variants: ["q", "\\delta"] },
-                { latex: "R", variants: ["r", "\\epsilon"] },
-                { latex: "S", variants: ["s", "\\phi"] },
-                { latex: "T", variants: ["t", "\\gamma"] },
+                { lable: '⊥', variants: ['\\not\\perp'] },
+                '[.]', '\\colon', { class: 'separator', width: 0.5 },
+                { label: "P", variants: ["p", "\\gamma"] },
+                { label: "Q", variants: ["q", "\\delta"] },
+                { label: "R", variants: ["r", "\\epsilon"] },
+                { label: "S", variants: ["s", "\\phi"] },
+                { label: "T", variants: ["t", "\\gamma"] },
               ],
               // 第五行
-              ['\\alpha', '\\beta', '\\gamma', '\\delta', { class: 'separator', width: 0.5 },
-                { latex: "U", variants: ["u", "\\phi"] },
-                { latex: "V", variants: ["v", "\\gamma"] },
-                { latex: "W", variants: ["w", "\\delta"] },
-                { latex: "X", variants: ["x", "\\epsilon"] },
-                { latex: "Y", variants: ["y", "\\phi"] }
+              [
+                '[(]', '\\rbrace', '\\lceil', '\\rceil', { class: 'separator', width: 0.5 },
+                '\\beta', '\\gamma', '\\delta',
+                { class: 'separator', width: 0.5 },
+                { label: "U", variants: ["u", "\\phi"] },
+                { label: "V", variants: ["v", "\\gamma"] },
+                { label: "W", variants: ["w", "\\delta"] },
+                { label: "X", variants: ["x", "\\epsilon"] },
+                { label: "Y", variants: ["y", "\\phi"] }
               ],
               // 第六行
               ['\\sin', '\\cos', '\\tan', '\\log', { class: 'separator', width: 0.5 },
@@ -157,7 +162,7 @@
                 { label: '[backspace]', width: 1 },
                 // { class: 'action', label: '[backspace]', "command": 'backspace', variants: '[deleteAll]', width: 1 },
                 '[left]', '[right]',
-                { label: '[action]', width: 1 }],
+                { label: '[return]', width: 1 }],
             ],
           },
         ],
