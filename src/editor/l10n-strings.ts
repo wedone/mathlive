@@ -27,6 +27,7 @@ export const STRINGS = {
     'tooltip.copy to clipboard': 'Copy to Clipboard',
     'tooltip.cut to clipboard': 'Cut to Clipboard',
     'tooltip.paste from clipboard': 'Paste from Clipboard',
+    'tooltip.delete': 'Delete All',
     'tooltip.redo': 'Redo',
     'tooltip.toggle virtual keyboard': 'Toggle Virtual Keyboard',
     'tooltip.menu': 'Menu',

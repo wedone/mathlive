@@ -176,33 +176,33 @@ function alphabeticLayout(): NormalizedVirtualKeyboardLayout {
   const rows: (string | Partial<VirtualKeyboardKeycap>)[][] =
     layoutName === 'azerty'
       ? [
-          [
-            { label: '1', variants: '1' },
-            { label: '2', shift: { latex: 'é' }, variants: '2' },
-            { label: '3', shift: { latex: 'ù' }, variants: '3' },
-            { label: '4', variants: '4' },
-            { label: '5', shift: { label: '(', latex: '(' }, variants: '5' },
-            { label: '6', shift: { label: ')', latex: ')' }, variants: '6' },
-            { label: '7', shift: { latex: 'è' }, variants: '7' },
-            { label: '8', shift: { latex: 'ê' }, variants: '8' },
-            { label: '9', shift: { latex: 'ç' }, variants: '9' },
-            { label: '0', shift: { latex: 'à' }, variants: '0' },
-          ],
-        ]
+        [
+          { label: '1', variants: '1' },
+          { label: '2', shift: { latex: 'é' }, variants: '2' },
+          { label: '3', shift: { latex: 'ù' }, variants: '3' },
+          { label: '4', variants: '4' },
+          { label: '5', shift: { label: '(', latex: '(' }, variants: '5' },
+          { label: '6', shift: { label: ')', latex: ')' }, variants: '6' },
+          { label: '7', shift: { latex: 'è' }, variants: '7' },
+          { label: '8', shift: { latex: 'ê' }, variants: '8' },
+          { label: '9', shift: { latex: 'ç' }, variants: '9' },
+          { label: '0', shift: { latex: 'à' }, variants: '0' },
+        ],
+      ]
       : [
-          [
-            { label: '1', variants: '1' },
-            { label: '2', variants: '2' },
-            { label: '3', variants: '3' },
-            { label: '4', variants: '4' },
-            { label: '5', shift: { latex: '\\frac{#@}{#?}' }, variants: '5' },
-            { label: '6', shift: { latex: '#@^#?' }, variants: '6' },
-            { label: '7', variants: '7' },
-            { label: '8', shift: { latex: '\\times' }, variants: '8' },
-            { label: '9', shift: { label: '(', latex: '(' }, variants: '9' },
-            { label: '0', shift: { label: ')', latex: ')' }, variants: '0' },
-          ],
-        ];
+        [
+          { label: '1', variants: '1' },
+          { label: '2', variants: '2' },
+          { label: '3', variants: '3' },
+          { label: '4', variants: '4' },
+          { label: '5', shift: { latex: '\\frac{#@}{#?}' }, variants: '5' },
+          { label: '6', shift: { latex: '#@^#?' }, variants: '6' },
+          { label: '7', variants: '7' },
+          { label: '8', shift: { latex: '\\times' }, variants: '8' },
+          { label: '9', shift: { label: '(', latex: '(' }, variants: '9' },
+          { label: '0', shift: { label: ')', latex: ')' }, variants: '0' },
+        ],
+      ];
 
   for (const templateRow of template) {
     const row: (string | Partial<VirtualKeyboardKeycap>)[] = [];
@@ -371,13 +371,15 @@ export function makeEditToolbar(
   const availableActions: string[] = [];
 
   if (mathfield.selectionIsCollapsed)
-    availableActions.push('undo', 'redo', 'pasteFromClipboard');
+    availableActions.push('undo', 'redo', 'pasteFromClipboard', 'deleteAll');
   else {
     availableActions.push(
       'cutToClipboard',
       'copyToClipboard',
       'pasteFromClipboard'
     );
+    // Always include deleteAll as an action in the toolbar
+    availableActions.push('deleteAll');
   }
 
   const actionsMarkup = {
@@ -411,6 +413,13 @@ export function makeEditToolbar(
             data-tooltip='${l10n('tooltip.paste from clipboard')}'>
             <svg><use xlink:href='#svg-paste' /></svg>
         </div>
+    `,
+    deleteAll: `
+      <div class='action'
+        data-command='"deleteAll"'
+        data-tooltip='${l10n('tooltip.delete')}'>
+        <svg><use xlink:href='#svg-trash' /></svg>
+      </div>
     `,
   };
 
@@ -567,9 +576,9 @@ export function makeKeyboardElement(keyboard: VirtualKeyboard): HTMLDivElement {
   plate.className = 'MLK__plate';
   plate.innerHTML = globalThis.MathfieldElement.createHTML(
     SVG_ICONS +
-      keyboard.normalizedLayouts
-        .map((x, i) => makeLayout(keyboard, x, i))
-        .join('')
+    keyboard.normalizedLayouts
+      .map((x, i) => makeLayout(keyboard, x, i))
+      .join('')
   );
 
   // The plate is placed on a 'backdrop' which is used to display the keyboard
@@ -746,7 +755,7 @@ export function renderKeycap(
       markup = keycap.shift.label
         ? keycap.shift.label
         : ((latexToMarkup(keycap.shift.latex || keycap.shift.insert || '') ||
-            keycap.shift.key) ??
+          keycap.shift.key) ??
           '');
     }
     if (typeof keycap.shift === 'object')
@@ -786,7 +795,7 @@ export function renderKeycap(
   if (!/\bw[0-9]+\b/.test(cls) && keycap.width) {
     cls +=
       { 0: ' w0', 0.5: ' w5', 1.5: ' w15', 2.0: ' w20', 5.0: ' w50' }[
-        keycap.width
+      keycap.width
       ] ?? '';
   }
 
