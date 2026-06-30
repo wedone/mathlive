@@ -92,16 +92,27 @@
     mathVirtualKeyboard.layouts = {
       layers: [
         {
+          id: 'symbols',
           rows: [
             [
-              "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
-              "(", ")", "\\sqrt{#0}", "#@^{#?}"
+              {
+                label: '123',
+                command: 'switchKeyboardLayer("numbers")'
+              },
+              '+', '-', '\\times', '\\frac{#@}{#?}', '=', '.', '(', ')', '\\sqrt{#0}', '#@^{#?}'
             ]
           ]
         },
         {
+          id: 'numbers',
           rows: [
-            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+            [
+              {
+                label: '+-*/',
+                command: 'switchKeyboardLayer("symbols")'
+              },
+              '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+            ]
           ]
         }
       ]
