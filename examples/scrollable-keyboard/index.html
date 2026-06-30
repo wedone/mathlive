@@ -35,7 +35,7 @@
     }
 
     math-field {
-      font-size: 28px;
+      font-size: 22px;
       width: 100%;
       /* max-width: 600px; */
       border: none;
@@ -94,6 +94,7 @@
         layers: [
           {
             rows: [
+              // 第一行
               ['[0]', '[1]', '[2]', '[3]', '[4]', { class: 'separator', width: 0.5 },
                 { latex: "A", variants: ["a", "\\alpha"] },
                 { latex: "B", variants: ["b", "\\beta"] },
@@ -102,6 +103,7 @@
                 { latex: "E", variants: ["e", "\\epsilon"] }
               ],
               // { class: 'small', latex: '\\frac{#@}{#?}' }, '\\varnothing', '\\infty', '\\in', '\\notin'],
+              // 第二行
               ['[5]', '[6]', '[7]', '[8]', '[9]', { class: 'separator', width: 0.5 },
                 { latex: "F", variants: ["f", "\\phi"] },
                 { latex: "G", variants: ["g", "\\gamma"] },
@@ -110,10 +112,12 @@
                 { latex: "J", variants: ["j", "\\phi"] }
                 // '(#@)', '[)]', '\\lt', '\\le', '\\hat{=}'
               ],
-              ['[.]', '[.]', { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
+              // 第三行
+              ['[.]',
+                { latex: '{#@}^{\\placeholder{@0}}', variants: ['{#@}_{\\placeholder{@0}}'] },
+                { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
                 { class: 'small', latex: '\\frac{#@}{#?}' },
                 { latex: '\\overrightarrow{#0}', variants: ['\\vec{#0}'] },
-
                 { class: 'separator', width: 0.5 },
                 { latex: "K", variants: ["k", "\\phi"] },
                 { latex: "L", variants: ["l", "\\gamma"] },
@@ -122,15 +126,26 @@
                 { latex: "O", variants: ["o", "\\phi"] }
                 // '[', ']', '\\gt', '\\ne', '\\ge'
               ],
+              // 第四行
               [
-                { label: '[0]', width: 2 }, '[.]', '\\colon', { class: 'separator', width: 0.5 },
-                '\\lbrace', '\\rbrace', '=', '\\ne'
+                { latex: '|{#0}|', variants: ['||{#0}||', '{#@}°'] },
+                { latex: '{#@}^{\\prime}', variants: ['{#@}^{\\doubleprime}', '{#@}°'] },
+                '[.]', '[.]', '\\colon', { class: 'separator', width: 0.5 },
+                { latex: "P", variants: ["p", "\\gamma"] },
+                { latex: "Q", variants: ["q", "\\delta"] },
+                { latex: "R", variants: ["r", "\\epsilon"] },
+                { latex: "S", variants: ["s", "\\phi"] },
+                { latex: "T", variants: ["t", "\\gamma"] },
               ],
-
+              // 第五行
               ['\\alpha', '\\beta', '\\gamma', '\\delta', { class: 'separator', width: 0.5 },
-                '\\sum', '\\prod', '\\int', '\\oint'
+                { latex: "U", variants: ["u", "\\phi"] },
+                { latex: "V", variants: ["v", "\\gamma"] },
+                { latex: "W", variants: ["w", "\\delta"] },
+                { latex: "X", variants: ["x", "\\epsilon"] },
+                { latex: "Y", variants: ["y", "\\phi"] }
               ],
-
+              // 第六行
               ['\\sin', '\\cos', '\\tan', '\\log', { class: 'separator', width: 0.5 },
                 '\\lim', '\\infty', '\\partial', '\\nabla'
               ],
