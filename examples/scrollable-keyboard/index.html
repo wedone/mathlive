@@ -200,7 +200,18 @@
                 // { class: 'action', label: '[backspace]', "command": 'backspace', variants: '[deleteAll]', width: 1 },
                 '[left]',
                 '[right]',
-                { label: '[return]', width: 1 }],
+                // ★ [插入]按键：替换原 [return]，默认行内，Shift 行间
+                {
+                  label: '[return]',
+                  class: 'action',
+                  width: 1,
+                  command: 'performWithFeedback(commit)',
+                  shift: {
+                    label: '↩️',
+                    class: 'action',
+                    command: 'performWithFeedback(commit)',
+                  },
+                }],
             ],
           },
         ],
