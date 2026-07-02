@@ -96,14 +96,14 @@
             rows: [
               // 第一行
               [
-                { 
-                  latex: '0', 
+                {
+                  latex: '0',
                   variants: [
                     '∞',
-                    '\\propto', 
-                    {latex:'×10}^{#0}',class:'small'},
-                  ], 
-                  shift: '\\infty' 
+                    '\\propto',
+                    { latex: '×10}^{#0}', class: 'small' },
+                  ],
+                  shift: '\\infty'
                 },
                 { label: '[1]', variants: ['\\frac{1}{#@}', '{#@}^{-1}', '{#@}_1'] },
                 { label: '[2]', variants: ['\\frac{1}{2}', '{#@}_2', '{#@}^2', '\\sqrt{2}'] },
@@ -135,12 +135,12 @@
               // 第三行
               [
                 '[.]',
-                { latex: '{#@}^{\\placeholder{@0}}', variants: ['{#@}_{\\placeholder{@0}}', '{#@}_{\\placeholder{@?}}^{\\placeholder{@?}}'] },
-                { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
-                { class: 'small', latex: '\\frac{#@}{#?}', variants: [{latex:"\\frac{#?}{#@}", class: 'small'}] },
-                { latex: '\\overrightarrow{#0}', variants: ['\\vec{#0}'] },
+                '[(]',
+                '[)]',
+                { label: "<", variants: ["\\le", '≪'] },
+                { label: ">", variants: ["\\ge", '≫ '] },
                 { class: 'separator', width: 0.5 },
-                { label: "K", variants: ["k", "Δ",'\\nabla'], shift: "Δ" },
+                { label: "K", variants: ["k", "Δ", '\\nabla'], shift: "Δ" },
                 { label: "L", variants: ["l", "ρ",], shift: "ρ" },
                 { label: "M", variants: ["m", "\\min", "\\max", "ϕ",], shift: "ϕ" },
                 { label: "N", variants: ["n", "Σ"], shift: "Σ" },
@@ -149,50 +149,51 @@
               ],
               // 第四行
               [
-                { latex: '|{#0}|', variants: ['||{#0}||'] },
                 { latex: '{#@}^{\\prime}', variants: ['{#@}^{\\doubleprime}', '{#@}°'] },
-                { latex: '\\perp', variants: ['∥', '\\not\\perp'], shift: '∥' },
-                { label: '∠', variants: ['∡', '∢'] },
-                { latex: "\\triangle", insert: "△", variants: ['◯', '□', '♢'] },
+                { class: 'small', latex: '\\frac{#@}{#?}', variants: [{ latex: "\\frac{#?}{#@}", class: 'small' }] },
+                { latex: '{#@}^{\\placeholder{@0}}', variants: ['{#@}_{\\placeholder{@0}}', '{#@}_{\\placeholder{@?}}^{\\placeholder{@?}}'] },
+                { latex: '\\sqrt{#0}', variants: ['\\sqrt{#@}'] },
+                { latex: '\\overrightarrow{#0}', variants: ['\\vec{#0}'] },
                 { class: 'separator', width: 0.5 },
                 { label: "P", variants: ["p", "η"], shift: "η" },
                 { label: "Q", variants: ["q", "ξ"], shift: "ξ" },
                 { label: "R", variants: ["r", "τ", '\\mathbb{R}'], shift: "τ" },
-                { latex: "S", variants: ["s", "S_{\\triangle{\\placeholder{@0}}}", "S_{□{\\placeholder{@0}}}", "Ω"], shift: "Ω" },
-                { label: "T", variants: ["t", "\\gamma"] , shift: ""},
+                { latex: "S", variants: ["s", "S_{\\placeholder{@0}}", "Ω"], shift: "Ω" },
+                { label: "T", variants: ["t"], shift: "" },
               ],
               // 第五行
               [
-                '[(]',
-                '[)]',
-                {label:"<",variants:["\\le",'≪']},
-                 {label:">",variants:["\\ge",'≫ ']},
-                { label: '≈', variants: ['∼', '≃', '≅', '≡'] },
+
+                { latex: '|{#0}|', variants: ['||{#0}||'] },
+                { latex: '\\perp', variants: ['∥', '\\not\\perp'], shift: '∥' },
+                { label: '∠', variants: ['∡', '∢'] },
+                { latex: "\\triangle", insert: "△", variants: [{ label: '▱', insert: '\\text{平行四边形}' }, { label: '□', insert: '\\text{正方形}' }, { label: '圆', insert: '\\text{圆}' }, { label: '⊙', insert: '\\text{圆点}' }] },
+                { latex: '\\because', insert: '\\text{因为}', variants: [{ latex: '\\therefore', insert: '\\text{所以}' }] },
                 { class: 'separator', width: 0.5 },
-                { label: "U", variants: ["u", "\\phi"] , shift: "" },
-                { label: "V", variants: ["v", "\\gamma"] , shift: ""},
-                { label: "W", variants: ["w", "\\delta"] , shift: ""},
-                { latex: "x", variants: ["X", "\\epsilon"], shift: ""},
-                { latex: "y", variants: ["Y", "\\phi"] , shift: ""}
+                { label: "U", variants: ["u"], shift: "" },
+                { label: "V", variants: ["v"], shift: "" },
+                { latex: "x", variants: ["X"], shift: "" },
+                { latex: "y", variants: ["Y"], shift: "" },
+                { latex: "z", variants: ["Z"], shift: "" }
               ],
               // 第六行
               [
-                {latex:'\\cup', variants:['\\cap'], shift: '\\cap'},
-                {latex:'\\in', variants:['\\notin', '\\ni'], shift: '\\notin'},
-                {latex:'\\subseteq', variants:['\\supseteq'], shift: '\\supseteq'},
-                {latex:'⇒', variants:['→','⇔'], shift: '→'},
+                { latex: '∈', variants: ['⊆', '⊂', '\\notin'], shift: '⊆' },
+                { latex: '∋', variants: ['⊇', '⊃'], shift: '⊇' },
+                { latex: '∪', variants: ['∩', '∅'], shift: '∩' },
+                { latex: '⇒', variants: ['→', '⟺'], shift: '→' },
+                { latex: '⇐', variants: ['←', '⇔'], shift: '←' },
                 { class: 'separator', width: 0.5 },
-                { latex: "\\sin", variants: ['\\arcsin'] },
-                { latex: "\\cos", variants: ['\\arccos'] },
-                { latex: "\\tan", variants: ['\\arctan'] },
-                { latex: "\\log", variants: ['\\ln', '\\lg',"\\lim"], shift: '\\ln' },
-                { latex: '\\max', variants: ['\\min'], shift: '\\min' },
-                { latex: "z", variants: ["Z", "\\gamma"] , shift: ""}
+                { latex: "\\sin", variants: [{ latex: '\\sin^{-1}', class: 'small' }, '\\arcsin'], shift: '\\sin^{-1}' },
+                { latex: "\\cos", variants: [{ latex: '\\cos^{-1}', class: 'small' }, '\\arccos'], shift: '\\cos^{-1}' },
+                { latex: "\\tan", variants: [{ latex: '\\tan^{-1}', class: 'small' }, '\\arctan'], shift: '\\tan^{-1}' },
+                { latex: "\\log", variants: ['\\ln', '\\lg'], shift: '\\ln' },
+                { latex: '\\max', variants: ['\\min', "\\lim"], shift: '\\min' },
               ],
             ],
             fixedRows: [
-              ['[+]', '[-]', '[*]', '[/]', 
-              {label:'=', variants:['≠','∼', '≈','≅', '≡'], shift:'≈'},
+              ['[+]', '[-]', '[*]', '[/]',
+                { label: '=', variants: ['≠', '∼', '≈', '≅', '≡'], shift: '≈' },
                 { class: 'separator', width: 0.5 },
                 { label: '[shift]', width: 1 },
                 { label: '[backspace]', width: 1 },
@@ -204,46 +205,50 @@
           },
         ],
       },
-      {
-        label: '符号',
-        layers: [
-          {
-            rows: [
-              [
-                {latex:'\\cup', variants:['\\cap'], shift: '\\cap'},
-                '\\wedge', '\\vee', '\\oplus', '\\otimes', '\\ominus', '\\oslash'],
-              ['\\subseteq', '\\supseteq', '\\subset', '\\supset', '\\in', '\\notin', '\\ni', '\\emptyset'],
-              ['\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow', '\\mapsto', '\\longmapsto', '\\implies', '\\iff'],
-              ['\\approx', '\\simeq', '\\cong', '\\equiv', '\\propto', '\\sim', '\\models', '\\dashv'],
-              ['\\forall', '\\exists', '\\nexists', '\\neg', '\\top', '\\bot', '\\vdash', '\\vDash'],
-            ],
-            fixedRows: [
-              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
-                '[-]', '[+]', '[=]', '[.]',
-                { label: '[action]', width: 1.5 }],
-            ],
-          },
-        ],
-      },
-      {
-        label: '希腊',
-        layers: [
-          {
-            rows: [
-              ['\\alpha', '\\beta', '\\gamma', '\\delta', '\\epsilon', '\\zeta', '\\eta', '\\theta'],
-              ['\\iota', '\\kappa', '\\lambda', '\\mu', '\\nu', '\\xi', '\\omicron', '\\pi'],
-              ['\\rho', '\\sigma', '\\tau', '\\upsilon', '\\phi', '\\chi', '\\psi', '\\omega'],
-              ['\\Gamma', '\\Delta', '\\Theta', '\\Lambda', '\\Xi', '\\Pi', '\\Sigma', '\\Phi'],
-              ['\\Psi', '\\Omega', '\\varpi', '\\varrho', '\\varsigma', '\\varphi', '\\aleph', '\\hbar'],
-            ],
-            fixedRows: [
-              ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
-                '[-]', '[+]', '[=]', '[.]',
-                { label: '[action]', width: 1.5 }],
-            ],
-          },
-        ],
-      },
+      'numeric',
+      'symbols',
+      'alphabetic',
+      'greek'
+      // {
+      //   label: '符号',
+      //   layers: [
+      //     {
+      //       rows: [
+      //         [
+      //           { latex: '\\cup', variants: ['\\cap'], shift: '\\cap' },
+      //           '\\wedge', '\\vee', '\\oplus', '\\otimes', '\\ominus', '\\oslash'],
+      //         ['\\subseteq', '\\supseteq', '\\subset', '\\supset', '\\in', '\\notin', '\\ni', '\\emptyset'],
+      //         ['\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow', '\\mapsto', '\\longmapsto', '\\implies', '\\iff'],
+      //         ['\\approx', '\\simeq', '\\cong', '\\equiv', '\\propto', '\\sim', '\\models', '\\dashv'],
+      //         ['\\forall', '\\exists', '\\nexists', '\\neg', '\\top', '\\bot', '\\vdash', '\\vDash'],
+      //       ],
+      //       fixedRows: [
+      //         ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
+      //           '[-]', '[+]', '[=]', '[.]',
+      //           { label: '[action]', width: 1.5 }],
+      //       ],
+      //     },
+      //   ],
+      // },
+      // {
+      //   label: '希腊',
+      //   layers: [
+      //     {
+      //       rows: [
+      //         ['\\alpha', '\\beta', '\\gamma', '\\delta', '\\epsilon', '\\zeta', '\\eta', '\\theta'],
+      //         ['\\iota', '\\kappa', '\\lambda', '\\mu', '\\nu', '\\xi', '\\omicron', '\\pi'],
+      //         ['\\rho', '\\sigma', '\\tau', '\\upsilon', '\\phi', '\\chi', '\\psi', '\\omega'],
+      //         ['\\Gamma', '\\Delta', '\\Theta', '\\Lambda', '\\Xi', '\\Pi', '\\Sigma', '\\Phi'],
+      //         ['\\Psi', '\\Omega', '\\varpi', '\\varrho', '\\varsigma', '\\varphi', '\\aleph', '\\hbar'],
+      //       ],
+      //       fixedRows: [
+      //         ['[left]', '[right]', '[backspace]', { class: 'separator', width: 0.5 },
+      //           '[-]', '[+]', '[=]', '[.]',
+      //           { label: '[action]', width: 1.5 }],
+      //       ],
+      //     },
+      //   ],
+      // },
     ];
   </script>
 
